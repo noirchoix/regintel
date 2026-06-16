@@ -1,0 +1,92 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: regintel
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports:
+      - '6379:6379'
+
+  qdrant:
+    image: qdrant/qdrant:v1.13.6
+    ports:
+      - '6333:6333'
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  api:
+    build:
+      context: ../../apps/api
+    env_file:
+      - ../../apps/api/.env.example
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@postgres:5432/regintel
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      PDF_WORKER_URL: http://pdf-worker:8010
+      CORS_ORIGINS: http://localhost:5173
+    depends_on:
+      - postgres
+      - redis
+      - qdrant
+      - pdf-worker
+    ports:
+      - '8000:8000'
+    volumes:
+      - regintel_data:/data
+
+  worker:
+    build:
+      context: ../../apps/api
+    env_file:
+      - ../../apps/api/.env.example
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@postgres:5432/regintel
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      PDF_WORKER_URL: http://pdf-worker:8010
+    depends_on:
+      - api
+      - redis
+      - qdrant
+    command: ["rq", "worker", "regintel", "--url", "redis://redis:6379/0"]
+    volumes:
+      - regintel_data:/data
+
+  pdf-worker:
+    build:
+      context: ../../apps/pdf-worker
+    env_file:
+      - ../../apps/pdf-worker/.env.example
+    ports:
+      - '8010:8010'
+    volumes:
+      - pdf_artifacts:/data/pdf_artifacts
+
+  web:
+    image: node:22-alpine
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000/v1
+    ports:
+      - '5173:5173'
+    volumes:
+      - ../../apps/web:/app
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+  qdrant_data:
+  regintel_data:
+  pdf_artifacts:

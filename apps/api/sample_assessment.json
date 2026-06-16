@@ -1,0 +1,19 @@
+{
+  "jurisdiction": "US",
+  "profile": {
+    "product_name": "DentalVision AI",
+    "company_name": "Pathway MedTech",
+    "intended_use": "Analyze dental images to assist clinicians with early detection of oral disease and surface actionable risk indicators.",
+    "target_users": ["Dentists", "Dental Clinics"],
+    "jurisdictions": ["US"],
+    "delivery_model": "web",
+    "clinical_decision_support": true,
+    "provides_diagnosis": true,
+    "provides_treatment_recommendation": false,
+    "stores_phi": true,
+    "integrates_with_ehr": true,
+    "uses_ml_models": true,
+    "human_in_the_loop": true,
+    "software_lifecycle_stage": "prototype"
+  }
+}

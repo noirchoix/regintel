@@ -1,0 +1,153 @@
+# ----------------------------
+# OS / Editor
+# ----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# ----------------------------
+# Python
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.pyo
+
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ----------------------------
+# Node / SvelteKit
+# ----------------------------
+node_modules/
+.npm/
+.pnpm-store/
+
+apps/web/.svelte-kit/
+apps/web/build/
+apps/web/.vercel/
+apps/web/.vite/
+apps/web/dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ----------------------------
+# Environment / secrets
+# ----------------------------
+.env
+.env.*
+!.env.example
+
+# Keep example envs
+apps/api/.env
+apps/pdf-worker/.env
+apps/web/.env
+
+# ----------------------------
+# Database / local state
+# ----------------------------
+*.db
+*.sqlite
+*.sqlite3
+
+# Alembic
+alembic/versions/*.pyc
+
+# ----------------------------
+# Uploaded documents / generated artifacts
+# ----------------------------
+data/
+uploads/
+artifacts/
+pdf_artifacts/
+qdrant_data/
+
+apps/api/data/
+apps/pdf-worker/data/
+apps/api/uploads/
+apps/api/artifacts/
+
+# Generated PDFs / TeX intermediates
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.tex.bak
+
+# Except tracked templates/docs if needed
+!docs/**/*.pdf
+
+# ----------------------------
+# Qdrant / Redis / Postgres volumes
+# ----------------------------
+infrastructure/docker/postgres_data/
+infrastructure/docker/redis_data/
+infrastructure/docker/qdrant_storage/
+
+# Docker overrides
+docker-compose.override.yml
+
+# ----------------------------
+# Coverage / test outputs
+# ----------------------------
+coverage.xml
+junit.xml
+test-results/
+playwright-report/
+
+# ----------------------------
+# Temporary exports / generated zips
+# ----------------------------
+*.zip
+!docs/examples/*.zip
+
+# ----------------------------
+# Local package manager locks (optional)
+# Keep the one you use and remove others if desired
+# ----------------------------
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+poetry.lock
+
+# ----------------------------
+# Misc generated files
+# ----------------------------
+*.bak
+*.orig
+*.rej
+*.seed
+*.dump
