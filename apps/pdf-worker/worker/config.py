@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     worker_name: str = Field(default='RegIntel PDF Worker')
     output_dir: str = Field(default='/data/pdf_artifacts')
-    public_base_url: str = Field(default='http://localhost:8010/artifacts')
+    public_base_url: str = Field(default='http://localhost:8011/artifacts')
 
     @property
     def output_path(self) -> Path:
